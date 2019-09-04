@@ -6,9 +6,10 @@ const MongoClient = require('mongodb').MongoClient
 var db
 
 // Remember to change YOUR_USERNAME and YOUR_PASSWORD to your username and password! 
-MongoClient.connect('mongodb://YOUR_USERNAME:YOUR_PASSWORD@ds047955.mongolab.com:47955/star-wars-quotes', (err, database) => {
+//MongoClient.connect('mongodb://comments-admin:qwer1234@ds047955.mongolab.com:47955/star-wars-quotes', (err, database) => {
+MongoClient.connect('mongodb+srv://comments-admin:qwer1234@cluster0-sgcwv.mongodb.net/test?retryWrites=true&w=majority', (err, database) => {
   if (err) return console.log(err)
-  db = database.db('star-wars-quotes')
+  db = database.db('sample_airbnb')
   app.listen(process.env.PORT || 3000, () => {
     console.log('listening on 3000')
   })
@@ -20,9 +21,9 @@ app.use(bodyParser.json())
 app.use(express.static('public'))
 
 app.get('/', (req, res) => {
-  db.collection('quotes').find().toArray((err, result) => {
+  db.collection('listingsAndReviews').find().limit(10).toArray((err, result) => {
     if (err) return console.log(err)
-    res.render('index.ejs', {quotes: result})
+    res.send(result);
   })
 })
 
