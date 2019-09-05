@@ -3,7 +3,7 @@ const app = express()
 const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
 
-var db
+let db
 
 // Remember to change YOUR_USERNAME and YOUR_PASSWORD to your username and password! 
 //MongoClient.connect('mongodb://comments-admin:qwer1234@ds047955.mongolab.com:47955/star-wars-quotes', (err, database) => {
@@ -26,7 +26,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.get('/', (req, res) => {
+app.get('/comments', (req, res) => {
   db.collection('listingsAndReviews', {name: 1}).find().limit(10).toArray((err, result) => {
     if (err) return console.log(err)
     res.send(result);
