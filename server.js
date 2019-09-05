@@ -9,7 +9,7 @@ let db
 //MongoClient.connect('mongodb://comments-admin:qwer1234@ds047955.mongolab.com:47955/star-wars-quotes', (err, database) => {
 MongoClient.connect('mongodb+srv://comments-admin:qwer1234@cluster0-sgcwv.mongodb.net/test?retryWrites=true&w=majority', (err, database) => {
   if (err) return console.log(err)
-  db = database.db('sample_airbnb')
+  db = database.db('comments')
   app.listen(process.env.PORT || 3000, () => {
     console.log('listening on 3000')
   })
@@ -27,7 +27,7 @@ app.use(function(req, res, next) {
 });
 
 app.get('/comments', (req, res) => {
-  db.collection('listingsAndReviews', {name: 1}).find().limit(10).toArray((err, result) => {
+  db.collection('comments', {text: 1}).find().limit(10).toArray((err, result) => {
     if (err) return console.log(err)
     res.send(result);
   })
