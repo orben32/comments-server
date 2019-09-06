@@ -33,6 +33,14 @@ app.get('/comments', (req, res) => {
   })
 })
 
+app.post('/comments', (req, res) => {
+  db.collection('comments').save(req.body, (err, result) => {
+    if (err) return console.log(err)
+    console.log('saved to database')
+    res.redirect('/')
+  })
+})
+
 app.post('/quotes', (req, res) => {
   db.collection('quotes').save(req.body, (err, result) => {
     if (err) return console.log(err)
