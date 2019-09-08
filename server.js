@@ -28,7 +28,7 @@ app.use(function(req, res, next) {
 
 app.get('/comments', (req, res) => {
   const {instanceId} = req.query;
-  db.collection('comments', {text: 1}).find({instanceId}).sort({createData: -1}).limit(10).toArray((err, result) => {
+  db.collection('comments', {text: 1, createDate: 1}).find({instanceId}).sort({createDate: -1}).limit(10).toArray((err, result) => {
     if (err) return console.log(err)
     res.send(result);
   })
