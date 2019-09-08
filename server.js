@@ -27,7 +27,8 @@ app.use(function(req, res, next) {
 });
 
 app.get('/comments', (req, res) => {
-  db.collection('comments', {text: 1}).find().limit(10).toArray((err, result) => {
+  const {instanceId} = req.query;
+  db.collection('comments', {text: 1}).find({instanceId}).limit(10).toArray((err, result) => {
     if (err) return console.log(err)
     res.send(result);
   })
