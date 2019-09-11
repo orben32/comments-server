@@ -42,6 +42,16 @@ app.post('/comments', (req, res) => {
   })
 })
 
+app.get('/comments/count', (req, res) => {
+  console.log('count');
+  const {instanceId} = req.query;
+  
+  db.collection('comments').find({instanceId}).count(function (e, count) {
+    console.log(count)
+    res.send({count})
+  });
+})
+
 app.post('/quotes', (req, res) => {
   db.collection('quotes').save(req.body, (err, result) => {
     if (err) return console.log(err)
