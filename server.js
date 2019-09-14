@@ -28,9 +28,12 @@ app.use(function(req, res, next) {
 
 app.get('/comments', (req, res) => {
   const {instanceId} = req.query;
-  db.collection('comments', {text: 1, createDate: 1}).find({instanceId}).sort({createDate: -1}).limit(10).toArray((err, result) => {
+  const collection = db.collection('comments', {text: 1, createDate: 1})
+  collection.find({instanceId}).sort({createDate: -1}).limit(10).toArray((err, result) => {
     if (err) return console.log(err)
-    res.send(result);
+    collection.count((e, count) => {
+      res.send({items: result, count});
+    })
   })
 })
 
