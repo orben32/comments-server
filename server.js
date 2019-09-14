@@ -32,7 +32,7 @@ app.get('/comments', (req, res) => {
   collection.find({instanceId}).sort({createDate: -1}).limit(10).toArray((err, result) => {
     if (err) return console.log(err)
     collection.count((e, count) => {
-      res.send({items: result, count});
+      res.send({items: result, count, extraData: 'just for test'});
     })
   })
 })
