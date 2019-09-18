@@ -29,12 +29,13 @@ app.use(function(req, res, next) {
 app.get('/comments', (req, res) => {
   const {instanceId} = req.query;
   const collection = db.collection('comments', {text: 1, createDate: 1})
-  collection.find({instanceId}).sort({createDate: -1}).limit(10).toArray((err, result) => {
-    if (err) return console.log(err)
-    collection.count({instanceId}, (e, count) => {
-      res.send({items: result, count, extraData: 'just for test'});
+  const countPromise = collection.count({instanceId})
+  const itemsPromise = collection.find({instanceId}).sort({createDate: -1}).limit(10).toArray()
+  
+  Promise.all([countPromise, itemsPromise])
+    .then(([count, items]) => {
+      res.send({items, count})
     })
-  })
 })
 
 app.post('/comments', (req, res) => {
