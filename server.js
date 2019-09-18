@@ -31,7 +31,7 @@ app.get('/comments', (req, res) => {
   const collection = db.collection('comments', {text: 1, createDate: 1})
   collection.find({instanceId}).sort({createDate: -1}).limit(10).toArray((err, result) => {
     if (err) return console.log(err)
-    collection.count((e, count) => {
+    collection.count({instanceId}, (e, count) => {
       res.send({items: result, count, extraData: 'just for test'});
     })
   })
@@ -53,6 +53,21 @@ app.get('/comments/count', (req, res) => {
     console.log(count)
     res.send({count})
   });
+})
+
+
+app.get('/comments/deleteAll', (req, res) => {
+  const {instanceId} = req.query;
+
+  db.collection('comments', {}, function(err, contacts) {
+    contacts.remove({instanceId}, function(err, result) {
+        if (err) {
+            console.log(err)
+        }
+        console.log(result)
+        res.send('ok')
+    });
+  })
 })
 
 app.post('/quotes', (req, res) => {
