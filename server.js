@@ -18,7 +18,13 @@ MongoClient.connect('mongodb+srv://comments-admin:qwer1234@cluster0-sgcwv.mongod
 app.set('view engine', 'ejs')
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
-app.use(express.static('public'))
+app.use(express.static('public', {
+  setHeaders: function (res, path, stat) {
+    if (path.endsWith('.usdz')) {
+      res.type('model/vnd.usdz+zip')
+    }
+  }
+}))
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*") // update to match the domain you will make the request from
