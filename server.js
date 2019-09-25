@@ -36,7 +36,8 @@ app.use(function(req, res, next) {
 app.get('/convert', (req, res) => {
   console.log('before');
   
-  const child = exec('sh ./public/usdpython_0/USD.command', (error, stdout, stderr) => {
+  //const child = exec('sh ./public/usdpython_0/USD.command', (error, stdout, stderr) => {
+  const child = exec('./public/usdpython_0/usdzconvert/usdzconvert island.usda gugu.usdz', (error, stdout, stderr) => {
     if (error) {
       throw error
     }
