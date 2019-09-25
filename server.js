@@ -44,6 +44,7 @@ app.get('/convert', (req, res) => {
   })
   init.stdout.on('close', () => {
     console.log('exit')
+    res.send({data: 'exited'})
   })
 })
 
