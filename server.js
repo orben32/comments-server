@@ -4,8 +4,18 @@ const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
 const fs = require('fs')
 const { exec } = require('child_process');
+const JSZIP = require('jszip')
 
 let db
+
+// const zip = new JSZIP()
+// zip.file('gugi.usdc', fs.readFileSync('gugi2/gugi.usdc'))
+//   .file('0/USDLogoLrg.png', fs.readFileSync('public/usdpython_0/samples/assets/textures/island_bc.png'))
+//   .generateAsync({type: 'nodebuffer', compression: 'STORE'})
+//   .then(zipped => {
+//     console.log(zipped.length)
+//     fs.writeFileSync('gugi.usdz', zipped)
+//   })
 
 // Remember to change YOUR_USERNAME and YOUR_PASSWORD to your username and password! 
 //MongoClient.connect('mongodb://comments-admin:qwer1234@ds047955.mongolab.com:47955/star-wars-quotes', (err, database) => {
@@ -34,34 +44,15 @@ app.use(function(req, res, next) {
   next()
 })
 
-app.get('/convert', (req, res) => {
-  console.log('before');
-  
-  //const child = exec('sh ./public/usdpython_0/USD.command', (error, stdout, stderr) => {
-  const vars = {
-    PATH: 'public/usdpython_0/usdzconvert',
-    PYTHONPATH: 'public/usdpython_0/USD/lib/python'
-  }
-  const init = exec('./public/usdpython_0/usdzconvert/usdzconvert island.usda gugu.usdz', {env: vars}, (error, stdout, stderr) => {
-    // if (error) {
-    //   console.error('errrror', error)
-    // }
-    // stdout.on('data', (data) => {
-    //   console.log('dataaaa', data)
-    //   res.send({data, exists: fs.existsSync('gugu.usdz')})
-    // })
-  })
-  setTimeout(() => {
-    res.send({gugu: fs.existsSync('gugu.usdz'), gug: fs.existsSync('gug.gug'), gog: fs.existsSync('gug.gog')})
-  }, 3000)
-  // init.stdout.on('data', (data) => {
-  //   console.log(data)
-  //   res.send({data, exists: fs.existsSync('gugu.usdz')})
-  // })
-  // init.stdout.on('close', () => {
-  //   console.log('exit')
-  //   res.send({data: 'exited', exists: fs.existsSync('gugu.usdz')})
-  // })
+app.get('/usdz.usdz', (req, res) => {
+  const zip = new JSZIP()
+  zip.file('gugi.usdc', fs.readFileSync('gugi2/gugi.usdc'))
+    .file('0/USDLogoLrg.png', fs.readFileSync('public/usdpython_0/samples/assets/textures/island_bc.png'))
+    .generateAsync({type: 'nodebuffer', compression: 'STORE'})
+    .then(zipped => {
+      res.type('model/vnd.usdz+zip')
+      res.send(zipped)
+    })
 })
 
 app.get('/comments', (req, res) => {
