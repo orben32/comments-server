@@ -59,6 +59,22 @@ app.get('/usdz.usdz', (req, res) => {
     })
 })
 
+app.get('/usdz', (req, res) => {
+  const {imageUrl} = req.query
+  fetch(imageUrl)
+    .then(res => res.arrayBuffer())
+    .then(imageData => {
+      const zip = new JSZIP()
+      zip.file('gugi.usdc', fs.readFileSync('gugi2/gugi.usdc'))
+      .file('0/USDLogoLrg.png', imageData)
+      .generateAsync({type: 'nodebuffer', compression: 'STORE'})
+      .then(zipped => {
+        res.type('model/vnd.usdz+zip')
+        res.send(zipped)
+      })
+    })
+})
+
 app.get('/comments', (req, res) => {
   const {instanceId} = req.query
   const collection = db.collection('comments', {text: 1, createDate: 1})
