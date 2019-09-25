@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
+const fs = require('fs')
 const { exec } = require('child_process');
 
 let db
@@ -40,11 +41,11 @@ app.get('/convert', (req, res) => {
   const init = exec('./convert.command')
   init.stdout.on('data', (data) => {
     console.log(data)
-    res.send({data})
+    res.send({data, exists: fs.existsSync('gugu.usdz')})
   })
   init.stdout.on('close', () => {
     console.log('exit')
-    res.send({data: 'exited'})
+    res.send({data: 'exited', exists: fs.existsSync('gugu.usdz')})
   })
 })
 
