@@ -37,17 +37,14 @@ app.get('/convert', (req, res) => {
   console.log('before');
   
   //const child = exec('sh ./public/usdpython_0/USD.command', (error, stdout, stderr) => {
-  const child = exec('./public/usdpython_0/usdzconvert/usdzconvert island.usda gugu.usdz', (error, stdout, stderr) => {
-    if (error) {
-      throw error
-    }
-    console.log('success', stdout)
-  })
-  child.stdout.on('data', (data)=>{
-    console.log(data); 
+  const init = exec('./convert.command')
+  init.stdout.on('data', (data) => {
+    console.log(data)
     res.send({data})
-    // do whatever you want here with data
-  });
+  })
+  init.stdout.on('close', () => {
+    console.log('exit')
+  })
 })
 
 app.get('/comments', (req, res) => {
