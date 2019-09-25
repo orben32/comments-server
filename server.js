@@ -38,15 +38,19 @@ app.get('/convert', (req, res) => {
   console.log('before');
   
   //const child = exec('sh ./public/usdpython_0/USD.command', (error, stdout, stderr) => {
-  const init = exec('./convert.command')
+  const vars = {
+    PATH: 'public/usdpython_0/usdzconvert',
+    PYTHONPATH: 'public/usdpython_0/USD/lib/python'
+  }
+  const init = exec('./public/usdpython_0/usdzconvert/usdzconvert island.usda gugu.usdz', {env: vars})
   init.stdout.on('data', (data) => {
     console.log(data)
     res.send({data, exists: fs.existsSync('gugu.usdz')})
   })
-  init.stdout.on('close', () => {
-    console.log('exit')
-    res.send({data: 'exited', exists: fs.existsSync('gugu.usdz')})
-  })
+  // init.stdout.on('close', () => {
+  //   console.log('exit')
+  //   res.send({data: 'exited', exists: fs.existsSync('gugu.usdz')})
+  // })
 })
 
 app.get('/comments', (req, res) => {
