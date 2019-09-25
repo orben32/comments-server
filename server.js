@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
+const { exec } = require('child_process');
 
 let db
 
@@ -30,6 +31,22 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*") // update to match the domain you will make the request from
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
   next()
+})
+
+app.get('/convert', (req, res) => {
+  console.log('before');
+  
+  const child = exec('sh ./public/usdpython_0/USD.command', (error, stdout, stderr) => {
+    if (error) {
+      throw error
+    }
+    console.log('success', stdout)
+  })
+  child.stdout.on('data', (data)=>{
+    console.log(data); 
+    res.send({data})
+    // do whatever you want here with data
+  });
 })
 
 app.get('/comments', (req, res) => {
