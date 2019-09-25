@@ -52,7 +52,7 @@ app.get('/convert', (req, res) => {
     // })
   })
   setTimeout(() => {
-    res.send({exists: fs.existsSync('gugu.usdz')})
+    res.send({gugu: fs.existsSync('gugu.usdz'), gug: fs.existsSync('gug.gug'), gog: fs.existsSync('gug.gog')})
   }, 3000)
   // init.stdout.on('data', (data) => {
   //   console.log(data)
