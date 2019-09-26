@@ -2,10 +2,8 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
-const fs = require('fs')
-const JSZIP = require('jszip')
 const fetch = require('node-fetch')
-const Jimp = require('jimp')
+const {createFromImage} = require('./usdzUtils')
 
 let db
 
@@ -36,37 +34,15 @@ app.use(function(req, res, next) {
   next()
 })
 
-app.get('/usdz.usdz', (req, res) => {
-  fetch('http://www.firstlooksagency.com/wp-content/uploads/2016/10/NJMLSBillboard.png')
-    .then(res => res.arrayBuffer())
-    .then(imageData => {
-      const zip = new JSZIP()
-      zip.file('gugi.usdc', fs.readFileSync('gugi2/gugi.usdc'))
-      .file('0/USDLogoLrg.png', imageData)
-      .generateAsync({type: 'nodebuffer', compression: 'STORE'})
-      .then(zipped => {
-        res.type('model/vnd.usdz+zip')
-        res.send(zipped)
-      })
-    })
-})
-
 app.get('/usdz', (req, res) => {
   const {imageUrl} = req.query
   
   fetch(imageUrl)
     .then(res => res.arrayBuffer())
-    .then(imageData => Jimp.read(imageData))
-    .then(image => image.getBufferAsync(Jimp.MIME_PNG))
-    .then(imageData => {
-      const zip = new JSZIP()
-      zip.file('gugi.usdc', fs.readFileSync('gugi2/gugi.usdc'))
-      .file('0/USDLogoLrg.png', imageData)
-      .generateAsync({type: 'nodebuffer', compression: 'STORE'})
-      .then(zipped => {
+    .then(imageData => createFromImage(imageData))
+    .then(zipped => {
         res.type('model/vnd.usdz+zip')
         res.send(zipped)
-      })
     })
 })
 
