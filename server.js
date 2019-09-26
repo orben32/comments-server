@@ -5,6 +5,7 @@ const MongoClient = require('mongodb').MongoClient
 const fs = require('fs')
 const JSZIP = require('jszip')
 const fetch = require('node-fetch')
+const Jimp = require('jimp')
 
 let db
 
@@ -61,8 +62,11 @@ app.get('/usdz.usdz', (req, res) => {
 
 app.get('/usdz', (req, res) => {
   const {imageUrl} = req.query
+  
   fetch(imageUrl)
     .then(res => res.arrayBuffer())
+    .then(imageData => Jimp.read(imageData))
+    .then(image => image.getBufferAsync(Jimp.MIME_PNG))
     .then(imageData => {
       const zip = new JSZIP()
       zip.file('gugi.usdc', fs.readFileSync('gugi2/gugi.usdc'))

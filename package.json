@@ -13,6 +13,7 @@
     "body-parser": "^1.14.2",
     "ejs": "^2.3.4",
     "express": "^4.13.3",
+    "jimp": "^0.8.4",
     "jszip": "^3.2.2",
     "mongodb": "^2.1.4",
     "node-fetch": "^2.6.0"
