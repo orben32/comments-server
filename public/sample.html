@@ -1,7 +1,22 @@
 <html>
     <body>
-        <a rel="ar" href="plane.usdz">
-            <img style="width: 200px; height: 100px" src="or_sharon_1.jpeg">
+        <a id="anchor" rel="ar" href="plane.usdz">
+            <img id ="img" style="width: 200px; height: 100px" src="or_sharon_1.jpeg">
         </a>
+        <div>
+            <input id="image_input" type="text" />
+            <button id="set_btn">Set</button>
+        </div>
     </body>
 </html>
+
+<script>
+    const btn = document.getElementById('set_btn')
+    btn.onclick = () => {
+        const input = document.getElementById('image_input')        
+        const anchor = document.getElementById('anchor')
+        anchor.href = `usdz?imageUrl=${input.value}`
+        const img = document.getElementById('img')
+        img.src = input.value
+    }
+</script>
