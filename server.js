@@ -9,15 +9,6 @@ const Jimp = require('jimp')
 
 let db
 
-// const zip = new JSZIP()
-// zip.file('gugi.usdc', fs.readFileSync('gugi2/gugi.usdc'))
-//   .file('0/USDLogoLrg.png', fs.readFileSync('public/usdpython_0/samples/assets/textures/island_bc.png'))
-//   .generateAsync({type: 'nodebuffer', compression: 'STORE'})
-//   .then(zipped => {
-//     console.log(zipped.length)
-//     fs.writeFileSync('gugi.usdz', zipped)
-//   })
-
 // Remember to change YOUR_USERNAME and YOUR_PASSWORD to your username and password! 
 //MongoClient.connect('mongodb://comments-admin:qwer1234@ds047955.mongolab.com:47955/star-wars-quotes', (err, database) => {
 MongoClient.connect('mongodb+srv://comments-admin:qwer1234@cluster0-sgcwv.mongodb.net/test?retryWrites=true&w=majority', (err, database) => {
