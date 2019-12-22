@@ -1,22 +1,33 @@
 <html>
-    <body>
-        <a id="anchor" rel="ar" href="plane.usdz">
-            <img id ="img" style="width: 200px; height: 100px" src="or_sharon_1.jpeg">
-        </a>
-        <div>
-            <input id="image_input" type="text" />
-            <button id="set_btn">Set</button>
-        </div>
-    </body>
+
+<body>
+    <a id="anchor" rel="ar" href="plane.usdz">
+        <img id="img" style="width: 200px; height: 100px" src="or_sharon_1.jpeg">
+    </a>
+    <a id="ar-link" rel="ar" href="https://comments-server.herokuapp.com/mac.usdz#callToAction=buy&checkoutTitle=Biplane%20Toy&checkoutSubtitle=Rustic%20finish%20with%20rotating%20propeller&price=$15"> <img
+            src="https://bulgariawinetours.com/wp-content/uploads/2016/04/tripadvisor-1.png"></a>
+    <div>
+        <input id="image_input" type="text" />
+        <button id="set_btn">Set</button>
+    </div>
+</body>
+
 </html>
 
 <script>
     const btn = document.getElementById('set_btn')
     btn.onclick = () => {
-        const input = document.getElementById('image_input')        
+        const input = document.getElementById('image_input')
         const anchor = document.getElementById('anchor')
         anchor.href = `usdz?imageUrl=${input.value}`
         const img = document.getElementById('img')
         img.src = input.value
     }
+    const linkElement = document.getElementById("ar-link");
+    linkElement.addEventListener("message", function (event) {
+        if (event.data == "_apple_ar_quicklook_button_tapped") {
+            alert('hello')
+            // handle the user tap.   
+        }
+    }, false);
 </script>
